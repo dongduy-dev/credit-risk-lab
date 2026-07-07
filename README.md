@@ -104,6 +104,22 @@ Majority-class baseline: accuracy `0.7788`, but it catches 0 actual defaulters a
 
 Interpretation: Gradient Boosting is the saved model because it has the best validation weighted F1 and the best held-out default F1 among the three models. Logistic Regression catches more defaulters, but it also produces many more false positives. Therefore, the best model depends on the credit-risk objective.
 
+## Decision-threshold Trade-off Extension
+
+The official model comparison above uses the default classifier threshold and remains the primary assignment result. As an additional credit-risk investigation, `src/train_models.py` evaluates fixed decision thresholds for the selected Gradient Boosting configuration using validation-set scores only. The final held-out test set is not used to search for or choose an operating threshold. The saved Streamlit artifact remains the final refit pipeline used for default-threshold demo predictions.
+
+| Threshold | Default precision | Default recall | Default F1 | Caught defaulters | Missed defaulters | False positives |
+|---|---:|---:|---:|---:|---:|---:|
+| 0.20 | 0.4414 | 0.6473 | 0.5249 | 859 | 468 | 1,087 |
+| 0.30 | 0.5415 | 0.5207 | 0.5309 | 691 | 636 | 585 |
+| 0.40 | 0.6413 | 0.4190 | 0.5068 | 556 | 771 | 311 |
+| 0.50 | 0.6870 | 0.3572 | 0.4700 | 474 | 853 | 216 |
+| 0.60 | 0.7079 | 0.2977 | 0.4191 | 395 | 932 | 163 |
+| 0.70 | 0.7273 | 0.1688 | 0.2740 | 224 | 1,103 | 84 |
+| 0.80 | 0.7241 | 0.0158 | 0.0310 | 21 | 1,306 | 8 |
+
+Interpretation: lowering the threshold catches more actual defaulters and reduces missed defaults, but it also creates many more false positives. Raising the threshold reduces false positives but misses more actual defaulters. There is no universally best threshold without a defined business cost, review capacity, or credit policy.
+
 ## Correlation-based Feature Selection Results
 
 The assignment requires Linear Regression with MAE for the feature-selection experiment. This is separate from the classification task. Here, the 0/1 target is treated as a numeric response only to compare feature subsets.
@@ -130,7 +146,7 @@ streamlit run app.py
 Pages:
 
 - `Home`: prediction form using the saved full pipeline artifact.
-- `Model Comparison`: classification metrics, baseline comparison, default-class performance, missed defaulters, and false-positive/false-negative trade-offs.
+- `Model Comparison`: classification metrics, baseline comparison, default-class performance, missed defaulters, false-positive/false-negative trade-offs, and validation-only threshold analysis.
 - `Feature Selection`: training-set correlation ranking, heatmap, selected feature subsets, and held-out MAE comparison.
 - `Statistics`: dataset overview, target distribution, raw-data audit, unusual codes, recoding decisions, repayment-code counts, and numeric exploration.
 - `About Us`: dataset and team information.
@@ -165,7 +181,7 @@ The `-B` flag prevents Python bytecode cache files from being generated during r
 | Artifact | Produced by | Purpose |
 |---|---|---|
 | `artifacts/data_quality_audit.json` | `src/data_audit.py` | Raw dataset facts and preprocessing traceability |
-| `artifacts/model_comparison.json` | `src/train_models.py` | Classification metrics, baseline, validation selection, risk interpretation |
+| `artifacts/model_comparison.json` | `src/train_models.py` | Classification metrics, baseline, validation selection, risk interpretation, threshold trade-off analysis |
 | `artifacts/best_model.ckpt` | `src/train_models.py` | Saved full preprocessing + classifier pipeline used by Streamlit |
 | `artifacts/feature_selection_results.json` | `src/feature_selection.py` | Feature subsets and MAE results |
 | `artifacts/correlation.csv` | `src/feature_selection.py` | Training-set feature-to-target correlation ranking |

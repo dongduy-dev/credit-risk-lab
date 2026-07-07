@@ -81,6 +81,112 @@
       "Weighted F1 is useful as a summary but can hide weak minority-class detection."
     ]
   },
+  "threshold_analysis": {
+    "model": "Gradient Boosting",
+    "score_source": "validation_set",
+    "default_threshold": 0.5,
+    "threshold_grid": [
+      0.2,
+      0.3,
+      0.4,
+      0.5,
+      0.6,
+      0.7,
+      0.8
+    ],
+    "validation_size": 6000,
+    "validation_actual_defaulters": 1327,
+    "test_set_usage": "The final held-out test set is not used for threshold exploration or threshold selection.",
+    "policy_note": "No threshold is selected as universally best; the operating point depends on business cost and review policy.",
+    "score_note": "Scores come from predict_proba and are used for ranking/threshold exploration, not as calibrated real-world default probabilities.",
+    "training_note": "Threshold rows use the selected model configuration fitted on the training split and scored on validation data; the saved final artifact is still refit on the full development set for default-threshold evaluation and demo predictions.",
+    "rows": [
+      {
+        "threshold": 0.2,
+        "predicted_defaults": 1946,
+        "caught_defaulters_true_positives": 859,
+        "missed_defaulters_false_negatives": 468,
+        "false_alarm_non_defaulters_false_positives": 1087,
+        "default_precision": 0.4414,
+        "default_recall": 0.6473,
+        "default_f1": 0.5249,
+        "false_negative_rate": 0.3527,
+        "false_positive_rate": 0.2326
+      },
+      {
+        "threshold": 0.3,
+        "predicted_defaults": 1276,
+        "caught_defaulters_true_positives": 691,
+        "missed_defaulters_false_negatives": 636,
+        "false_alarm_non_defaulters_false_positives": 585,
+        "default_precision": 0.5415,
+        "default_recall": 0.5207,
+        "default_f1": 0.5309,
+        "false_negative_rate": 0.4793,
+        "false_positive_rate": 0.1252
+      },
+      {
+        "threshold": 0.4,
+        "predicted_defaults": 867,
+        "caught_defaulters_true_positives": 556,
+        "missed_defaulters_false_negatives": 771,
+        "false_alarm_non_defaulters_false_positives": 311,
+        "default_precision": 0.6413,
+        "default_recall": 0.419,
+        "default_f1": 0.5068,
+        "false_negative_rate": 0.581,
+        "false_positive_rate": 0.0666
+      },
+      {
+        "threshold": 0.5,
+        "predicted_defaults": 690,
+        "caught_defaulters_true_positives": 474,
+        "missed_defaulters_false_negatives": 853,
+        "false_alarm_non_defaulters_false_positives": 216,
+        "default_precision": 0.687,
+        "default_recall": 0.3572,
+        "default_f1": 0.47,
+        "false_negative_rate": 0.6428,
+        "false_positive_rate": 0.0462
+      },
+      {
+        "threshold": 0.6,
+        "predicted_defaults": 558,
+        "caught_defaulters_true_positives": 395,
+        "missed_defaulters_false_negatives": 932,
+        "false_alarm_non_defaulters_false_positives": 163,
+        "default_precision": 0.7079,
+        "default_recall": 0.2977,
+        "default_f1": 0.4191,
+        "false_negative_rate": 0.7023,
+        "false_positive_rate": 0.0349
+      },
+      {
+        "threshold": 0.7,
+        "predicted_defaults": 308,
+        "caught_defaulters_true_positives": 224,
+        "missed_defaulters_false_negatives": 1103,
+        "false_alarm_non_defaulters_false_positives": 84,
+        "default_precision": 0.7273,
+        "default_recall": 0.1688,
+        "default_f1": 0.274,
+        "false_negative_rate": 0.8312,
+        "false_positive_rate": 0.018
+      },
+      {
+        "threshold": 0.8,
+        "predicted_defaults": 29,
+        "caught_defaulters_true_positives": 21,
+        "missed_defaulters_false_negatives": 1306,
+        "false_alarm_non_defaulters_false_positives": 8,
+        "default_precision": 0.7241,
+        "default_recall": 0.0158,
+        "default_f1": 0.031,
+        "false_negative_rate": 0.9842,
+        "false_positive_rate": 0.0017
+      }
+    ]
+  },
   "results": {
     "Logistic Regression": {
       "accuracy": 0.6788,
@@ -140,8 +246,8 @@
       },
       "roc_auc": 0.7104,
       "pr_auc": 0.4913,
-      "train_time_sec": 0.0691,
-      "test_time_sec": 0.0051,
+      "train_time_sec": 0.0705,
+      "test_time_sec": 0.0062,
       "selection": {
         "validation_weighted_f1": 0.7144
       }
@@ -204,8 +310,8 @@
       },
       "roc_auc": 0.7613,
       "pr_auc": 0.538,
-      "train_time_sec": 1.4319,
-      "test_time_sec": 0.0644,
+      "train_time_sec": 1.6955,
+      "test_time_sec": 0.0767,
       "selection": {
         "validation_weighted_f1": 0.7921
       }
@@ -268,8 +374,8 @@
       },
       "roc_auc": 0.778,
       "pr_auc": 0.5502,
-      "train_time_sec": 6.751,
-      "test_time_sec": 0.012,
+      "train_time_sec": 7.5547,
+      "test_time_sec": 0.0096,
       "selection": {
         "validation_weighted_f1": 0.7994
       }

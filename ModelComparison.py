@@ -26,6 +26,7 @@ def ModelComparison():
     selection = data.get("selection", {})
     baseline = data.get("majority_baseline")
     interpretation = data.get("risk_interpretation", {})
+    threshold_analysis = data.get("threshold_analysis")
 
     if selection.get("selection_set") == "validation":
         st.success(f"Saved model (selected by validation weighted F1): **{data['best_model']}**")
@@ -200,6 +201,70 @@ def ModelComparison():
                 title="Default recall vs precision",
             )
             st.plotly_chart(fig, width="stretch")
+
+
+    if threshold_analysis:
+        st.subheader("Credit-risk Extension: Decision-threshold Trade-off")
+        st.caption(
+            "This extension uses validation-set scores for the selected model only. "
+            "The official model comparison above remains the default-threshold final-test evaluation."
+        )
+        st.info(
+            "A classifier produces a default-class score. The operating threshold turns that score into a class decision. "
+            "Lower thresholds usually catch more defaulters and miss fewer defaults, but they also flag more non-defaulters. "
+            "There is no universally best threshold without a defined business cost or review policy."
+        )
+
+        threshold_df = pd.DataFrame(threshold_analysis["rows"])
+        threshold_display = threshold_df.rename(columns={
+            "threshold": "Threshold",
+            "predicted_defaults": "Predicted defaults",
+            "caught_defaulters_true_positives": "Caught defaulters",
+            "missed_defaulters_false_negatives": "Missed defaulters",
+            "false_alarm_non_defaulters_false_positives": "False positives",
+            "default_precision": "Default precision",
+            "default_recall": "Default recall",
+            "default_f1": "Default F1",
+            "false_negative_rate": "False negative rate",
+            "false_positive_rate": "False positive rate",
+        })
+        st.dataframe(threshold_display, width="stretch", hide_index=True)
+
+        default_threshold = threshold_analysis.get("default_threshold", 0.5)
+        default_rows = threshold_df[threshold_df["threshold"] == default_threshold]
+        if not default_rows.empty:
+            default_row = default_rows.iloc[0]
+            t1, t2, t3, t4 = st.columns(4)
+            t1.metric("Default threshold", f"{default_threshold:.2f}")
+            t2.metric("Validation caught defaulters", int(default_row["caught_defaulters_true_positives"]))
+            t3.metric("Validation missed defaulters", int(default_row["missed_defaulters_false_negatives"]))
+            t4.metric("Validation false positives", int(default_row["false_alarm_non_defaulters_false_positives"]))
+
+        c5, c6 = st.columns(2)
+        with c5:
+            fig = px.line(
+                threshold_df,
+                x="threshold",
+                y=["missed_defaulters_false_negatives", "false_alarm_non_defaulters_false_positives"],
+                markers=True,
+                title="Validation missed defaulters vs false positives by threshold",
+                labels={"threshold": "Decision threshold", "value": "Count", "variable": "Metric"},
+            )
+            st.plotly_chart(fig, width="stretch")
+        with c6:
+            fig = px.line(
+                threshold_df,
+                x="threshold",
+                y=["default_precision", "default_recall", "default_f1"],
+                markers=True,
+                title="Validation default-class metrics by threshold",
+                labels={"threshold": "Decision threshold", "value": "Score", "variable": "Metric"},
+            )
+            st.plotly_chart(fig, width="stretch")
+
+        st.caption(threshold_analysis.get("test_set_usage", "Final test set is not used for threshold exploration."))
+        st.caption(threshold_analysis.get("score_note", "Scores are model outputs and are not calibrated real-world probabilities."))
+        st.caption(threshold_analysis.get("training_note", "Threshold rows use validation-stage model scores; the saved artifact remains the default-threshold prediction pipeline."))
 
     notes = interpretation.get("risk_objective_notes", [])
     if notes:

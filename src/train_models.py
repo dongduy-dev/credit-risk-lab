@@ -41,6 +41,7 @@ ROOT = Path(__file__).resolve().parent.parent
 DATA_PATH = ROOT / "data" / "credit_card_default.csv"
 ARTIFACTS = ROOT / "artifacts"
 ARTIFACTS.mkdir(exist_ok=True)
+THRESHOLD_GRID = [0.20, 0.30, 0.40, 0.50, 0.60, 0.70, 0.80]
 
 
 def get_models() -> dict:
@@ -125,6 +126,47 @@ def evaluate_predictions(y_true, y_pred, y_score=None) -> dict:
     return metrics
 
 
+def build_threshold_analysis(model_name: str, y_true, y_score, thresholds=None) -> dict:
+    """Evaluate fixed score thresholds on the validation set only.
+
+    This is an exploratory risk-management view for the selected model. It does
+    not choose a new production threshold and does not inspect the final test set.
+    """
+    thresholds = thresholds or THRESHOLD_GRID
+    rows = []
+
+    for threshold in thresholds:
+        y_pred = [1 if score >= threshold else 0 for score in y_score]
+        metrics = evaluate_predictions(y_true, y_pred)
+        cm = metrics["confusion_matrix"]
+        risk = metrics["credit_risk"]
+        rows.append({
+            "threshold": round(float(threshold), 2),
+            "predicted_defaults": int(sum(y_pred)),
+            "caught_defaulters_true_positives": cm["true_positives"],
+            "missed_defaulters_false_negatives": cm["false_negatives"],
+            "false_alarm_non_defaulters_false_positives": cm["false_positives"],
+            "default_precision": risk["default_precision"],
+            "default_recall": risk["default_recall"],
+            "default_f1": risk["default_f1"],
+            "false_negative_rate": risk["false_negative_rate"],
+            "false_positive_rate": risk["false_positive_rate"],
+        })
+
+    return {
+        "model": model_name,
+        "score_source": "validation_set",
+        "default_threshold": 0.5,
+        "threshold_grid": [round(float(t), 2) for t in thresholds],
+        "validation_size": int(len(y_true)),
+        "validation_actual_defaulters": int(sum(y_true)),
+        "test_set_usage": "The final held-out test set is not used for threshold exploration or threshold selection.",
+        "policy_note": "No threshold is selected as universally best; the operating point depends on business cost and review policy.",
+        "score_note": "Scores come from predict_proba and are used for ranking/threshold exploration, not as calibrated real-world default probabilities.",
+        "training_note": "Threshold rows use the selected model configuration fitted on the training split and scored on validation data; the saved final artifact is still refit on the full development set for default-threshold evaluation and demo predictions.",
+        "rows": rows,
+    }
+
 def build_majority_baseline(y_test) -> dict:
     """Baseline du doan tat ca la class 0 de so sanh voi du lieu mat can bang."""
     y_pred = [0] * len(y_test)
@@ -185,6 +227,7 @@ def main():
     )
 
     validation_scores = {}
+    validation_threshold_scores = {}
     best_f1 = -1.0
     best_name = None
 
@@ -192,6 +235,8 @@ def main():
         pipe = build_pipeline(estimator)
         pipe.fit(X_train, y_train)
         y_val_pred = pipe.predict(X_val)
+        if hasattr(pipe, "predict_proba"):
+            validation_threshold_scores[name] = pipe.predict_proba(X_val)[:, 1]
         val_report = classification_report(
             y_val, y_val_pred, output_dict=True, zero_division=0
         )
@@ -204,6 +249,18 @@ def main():
     print("Model selection metric: validation weighted F1")
     for name, score in validation_scores.items():
         print(f"{name:22s} | validation_weighted_f1={score:.4f}")
+    threshold_analysis = build_threshold_analysis(
+        best_name, y_val, validation_threshold_scores[best_name]
+    )
+    print("Threshold trade-off analysis for selected model (validation set only):")
+    for row in threshold_analysis["rows"]:
+        print(
+            f"threshold={row['threshold']:.2f} "
+            f"| default_recall={row['default_recall']:.4f} "
+            f"| default_precision={row['default_precision']:.4f} "
+            f"| missed_defaults={row['missed_defaulters_false_negatives']} "
+            f"| false_positives={row['false_alarm_non_defaulters_false_positives']}"
+        )
     print()
 
     results = {}
@@ -254,6 +311,7 @@ def main():
         },
         "majority_baseline": majority_baseline,
         "risk_interpretation": build_risk_interpretation(results, majority_baseline),
+        "threshold_analysis": threshold_analysis,
         "results": results,
     }
     with open(ARTIFACTS / "model_comparison.json", "w", encoding="utf-8") as f:
