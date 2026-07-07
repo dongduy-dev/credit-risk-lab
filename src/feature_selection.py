@@ -15,7 +15,7 @@ Muc dich la MINH HOA anh huong cua feature selection (tap feature tot -> MAE tha
 KHONG phai dung LinearRegression lam model phan loai chinh thuc (do la viec cua Bai 1).
 
 Chay:  python src/feature_selection.py
-Output: artifacts/feature_selection_results.json  +  artifacts/correlation.csv
+Output: artifacts/feature_selection_results.json  +  artifacts/correlation.csv + artifacts/correlation_matrix.csv
 """
 from __future__ import annotations
 
@@ -50,12 +50,19 @@ def main():
     y = df[TARGET]
     feature_names = X.columns.tolist()
 
+    # Chia train/test truoc khi tinh correlation. Test set chi dung mot lan de
+    # danh gia MAE cuoi cung, khong dung de xep hang hay chon feature.
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.2, random_state=42
+    )
+
     # ---------------------------------------------------------------
     # (a) Phuong phap dua tren Correlation
     # r_regression tra ve he so tuong quan Pearson giua tung feature va target.
     # Gia tri nam trong [-1, 1]; |r| cang lon -> tuong quan tuyen tinh cang manh.
+    # Chi fit/tinh tren train set de tranh leakage tu test set.
     # ---------------------------------------------------------------
-    corr_scores = r_regression(X, y)
+    corr_scores = r_regression(X_train, y_train)
     corr_df = (
         pd.DataFrame({"feature": feature_names, "corr_with_target": corr_scores})
         .assign(abs_corr=lambda d: d["corr_with_target"].abs())
@@ -63,7 +70,12 @@ def main():
         .reset_index(drop=True)
     )
     corr_df.to_csv(ARTIFACTS / "correlation.csv", index=False)
-    print("Top 5 feature tuong quan manh nhat voi target:")
+
+    corr_matrix_df = X_train.copy()
+    corr_matrix_df[TARGET] = y_train
+    corr_matrix_df.corr(numeric_only=True).to_csv(ARTIFACTS / "correlation_matrix.csv")
+
+    print("Top 5 feature tuong quan manh nhat voi target (training set only):")
     print(corr_df.head(5).to_string(index=False))
     print()
 
@@ -71,11 +83,8 @@ def main():
     # (b) Thu nghiem cac tap feature khac nhau -> so sanh MAE
     # Dung SelectKBest voi score_func=f_regression (dua tren tuong quan tuyen tinh)
     # de chon ra k feature tot nhat mot cach tu dong theo API cua sklearn.
+    # Selector fit tren train set; test set chi dung de tinh MAE.
     # ---------------------------------------------------------------
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, random_state=42
-    )
-
     k_values = [5, 10, 15, X.shape[1]]  # X.shape[1] = dung toan bo feature
     results = []
 
@@ -93,7 +102,7 @@ def main():
         X_tr_sc = scaler.fit_transform(X_tr_sel)
         X_te_sc = scaler.transform(X_te_sel)
 
-        # 3) Train LinearRegression + do MAE
+        # 3) Train LinearRegression + do MAE tren held-out test set
         lr = LinearRegression()
         lr.fit(X_tr_sc, y_train)
         y_pred = lr.predict(X_te_sc)
@@ -110,6 +119,8 @@ def main():
 
     best = min(results, key=lambda r: r["mae"])
     payload = {
+        "correlation_source": "training_set",
+        "test_set_role": "Final held-out test set is used only for MAE evaluation.",
         "correlation_ranking": corr_df.to_dict(orient="records"),
         "experiments": results,
         "best_feature_set": best["feature_set"],
@@ -121,7 +132,8 @@ def main():
 
     print(f"\nTap feature cho MAE thap nhat: {best['feature_set']} (MAE={best['mae']})")
     print(f"Saved -> {ARTIFACTS/'feature_selection_results.json'}")
-
+    print(f"Saved -> {ARTIFACTS/'correlation.csv'}")
+    print(f"Saved -> {ARTIFACTS/'correlation_matrix.csv'}")
 
 if __name__ == "__main__":
     main()

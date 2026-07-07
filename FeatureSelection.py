@@ -1,6 +1,6 @@
 """
 FeatureSelection.py — Hien thi ket qua BAI 2: feature selection dua tren correlation.
-Doc tu artifacts/feature_selection_results.json + artifacts/correlation.csv.
+Doc tu artifacts/feature_selection_results.json + artifacts/correlation.csv + artifacts/correlation_matrix.csv.
 """
 import json
 from pathlib import Path
@@ -12,7 +12,7 @@ import streamlit as st
 ROOT = Path(__file__).resolve().parent
 RESULT_PATH = ROOT / "artifacts" / "feature_selection_results.json"
 CORR_PATH = ROOT / "artifacts" / "correlation.csv"
-DATA_PATH = ROOT / "data" / "credit_card_default.csv"
+CORR_MATRIX_PATH = ROOT / "artifacts" / "correlation_matrix.csv"
 
 
 def FeatureSelection():
@@ -30,21 +30,24 @@ def FeatureSelection():
     # --- (a) Correlation cua tung feature voi target ---
     st.subheader("(a) Correlation of Each Feature with the Target")
     corr_df = pd.read_csv(CORR_PATH)
+    if data.get("correlation_source") == "training_set":
+        st.caption("Correlation ranking is calculated on the training split only; the test set is reserved for final MAE evaluation.")
     fig = px.bar(corr_df.sort_values("corr_with_target"),
                  x="corr_with_target", y="feature", orientation="h",
-                 title="Pearson correlation with target (DEFAULT)")
+                 title="Pearson correlation with target (training set)")
     st.plotly_chart(fig, use_container_width=True)
 
-    # --- Heatmap correlation toan bo (minh hoa truc quan) ---
-    st.subheader("Correlation Matrix (heatmap)")
+    # --- Heatmap correlation tren train set (minh hoa truc quan) ---
+    st.subheader("Correlation Matrix (training set heatmap)")
     try:
-        df = pd.read_csv(DATA_PATH).drop(columns=["ID"])
-        corr = df.corr(numeric_only=True)
+        corr = pd.read_csv(CORR_MATRIX_PATH, index_col=0)
         fig = px.imshow(corr, text_auto=".2f", aspect="auto",
-                        title="Correlation matrix", color_continuous_scale="RdBu_r",
+                        title="Correlation matrix from training split", color_continuous_scale="RdBu_r",
                         zmin=-1, zmax=1)
         fig.update_layout(height=700)
         st.plotly_chart(fig, use_container_width=True)
+    except FileNotFoundError:
+        st.warning('No training-set correlation matrix found. Run "python src/feature_selection.py" first.')
     except Exception as e:
         st.warning(f"Could not render heatmap: {e}")
 

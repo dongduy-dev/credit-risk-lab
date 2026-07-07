@@ -1,119 +1,121 @@
 {
+  "correlation_source": "training_set",
+  "test_set_role": "Final held-out test set is used only for MAE evaluation.",
   "correlation_ranking": [
     {
       "feature": "PAY_1",
-      "corr_with_target": 0.3247937284786234,
-      "abs_corr": 0.3247937284786234
+      "corr_with_target": 0.3258396076474152,
+      "abs_corr": 0.3258396076474152
     },
     {
       "feature": "PAY_2",
-      "corr_with_target": 0.2635512016721663,
-      "abs_corr": 0.2635512016721663
+      "corr_with_target": 0.26682479402491605,
+      "abs_corr": 0.26682479402491605
     },
     {
       "feature": "PAY_3",
-      "corr_with_target": 0.23525251372491737,
-      "abs_corr": 0.23525251372491737
+      "corr_with_target": 0.23827525483539078,
+      "abs_corr": 0.23827525483539078
     },
     {
       "feature": "PAY_4",
-      "corr_with_target": 0.21661363684242554,
-      "abs_corr": 0.21661363684242554
+      "corr_with_target": 0.2209435970707663,
+      "abs_corr": 0.2209435970707663
     },
     {
       "feature": "PAY_5",
-      "corr_with_target": 0.2041489138761675,
-      "abs_corr": 0.2041489138761675
+      "corr_with_target": 0.2050670355139103,
+      "abs_corr": 0.2050670355139103
     },
     {
       "feature": "PAY_6",
-      "corr_with_target": 0.18686636165354595,
-      "abs_corr": 0.18686636165354595
+      "corr_with_target": 0.18885966924395933,
+      "abs_corr": 0.18885966924395933
     },
     {
       "feature": "LIMIT_BAL",
-      "corr_with_target": -0.1535198763935082,
-      "abs_corr": 0.1535198763935082
+      "corr_with_target": -0.15432830923563168,
+      "abs_corr": 0.15432830923563168
     },
     {
       "feature": "PAY_AMT1",
-      "corr_with_target": -0.07292948777785176,
-      "abs_corr": 0.07292948777785176
+      "corr_with_target": -0.06793316642631815,
+      "abs_corr": 0.06793316642631815
     },
     {
       "feature": "PAY_AMT2",
-      "corr_with_target": -0.05857870658290122,
-      "abs_corr": 0.05857870658290122
-    },
-    {
-      "feature": "PAY_AMT4",
-      "corr_with_target": -0.056827400892887965,
-      "abs_corr": 0.056827400892887965
-    },
-    {
-      "feature": "PAY_AMT3",
-      "corr_with_target": -0.056250350990331426,
-      "abs_corr": 0.056250350990331426
-    },
-    {
-      "feature": "PAY_AMT5",
-      "corr_with_target": -0.055123515621088734,
-      "abs_corr": 0.055123515621088734
+      "corr_with_target": -0.05647923266417139,
+      "abs_corr": 0.05647923266417139
     },
     {
       "feature": "PAY_AMT6",
-      "corr_with_target": -0.053183340326128384,
-      "abs_corr": 0.053183340326128384
+      "corr_with_target": -0.05498891932190288,
+      "abs_corr": 0.05498891932190288
+    },
+    {
+      "feature": "PAY_AMT4",
+      "corr_with_target": -0.054048368045431346,
+      "abs_corr": 0.054048368045431346
+    },
+    {
+      "feature": "PAY_AMT3",
+      "corr_with_target": -0.05381651063556785,
+      "abs_corr": 0.05381651063556785
+    },
+    {
+      "feature": "PAY_AMT5",
+      "corr_with_target": -0.04970525113518976,
+      "abs_corr": 0.04970525113518976
     },
     {
       "feature": "SEX",
-      "corr_with_target": -0.039960577705440564,
-      "abs_corr": 0.039960577705440564
+      "corr_with_target": -0.04307608805998524,
+      "abs_corr": 0.04307608805998524
     },
     {
       "feature": "EDUCATION",
-      "corr_with_target": 0.03384222982567632,
-      "abs_corr": 0.03384222982567632
+      "corr_with_target": 0.036323317746896906,
+      "abs_corr": 0.036323317746896906
     },
     {
       "feature": "MARRIAGE",
-      "corr_with_target": -0.027574706154477678,
-      "abs_corr": 0.027574706154477678
+      "corr_with_target": -0.0272991708851495,
+      "abs_corr": 0.0272991708851495
     },
     {
       "feature": "BILL_AMT1",
-      "corr_with_target": -0.01964419714322167,
-      "abs_corr": 0.01964419714322167
-    },
-    {
-      "feature": "BILL_AMT2",
-      "corr_with_target": -0.014193218088215815,
-      "abs_corr": 0.014193218088215815
-    },
-    {
-      "feature": "BILL_AMT3",
-      "corr_with_target": -0.014075518043214868,
-      "abs_corr": 0.014075518043214868
+      "corr_with_target": -0.01929853129763746,
+      "abs_corr": 0.01929853129763746
     },
     {
       "feature": "AGE",
-      "corr_with_target": 0.013889834301963095,
-      "abs_corr": 0.013889834301963095
+      "corr_with_target": 0.017087696195660387,
+      "abs_corr": 0.017087696195660387
+    },
+    {
+      "feature": "BILL_AMT3",
+      "corr_with_target": -0.014380132982007464,
+      "abs_corr": 0.014380132982007464
+    },
+    {
+      "feature": "BILL_AMT2",
+      "corr_with_target": -0.013775218581563064,
+      "abs_corr": 0.013775218581563064
     },
     {
       "feature": "BILL_AMT4",
-      "corr_with_target": -0.01015649588028977,
-      "abs_corr": 0.01015649588028977
+      "corr_with_target": -0.010970675170305604,
+      "abs_corr": 0.010970675170305604
     },
     {
       "feature": "BILL_AMT5",
-      "corr_with_target": -0.00676046384101478,
-      "abs_corr": 0.00676046384101478
+      "corr_with_target": -0.007507862446146,
+      "abs_corr": 0.007507862446146
     },
     {
       "feature": "BILL_AMT6",
-      "corr_with_target": -0.0053723149148155675,
-      "abs_corr": 0.0053723149148155675
+      "corr_with_target": -0.005410092584304525,
+      "abs_corr": 0.005410092584304525
     }
   ],
   "experiments": [
