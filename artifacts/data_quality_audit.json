@@ -1,0 +1,926 @@
+{
+  "dataset": {
+    "csv_path": "C:\\Users\\huynh\\OneDrive\\Desktop\\MachineLearning\\credit-risk-lab\\data\\credit_card_default.csv",
+    "shape": [
+      30000,
+      25
+    ],
+    "feature_count_excluding_id_and_target": 23,
+    "target_column": "DEFAULT"
+  },
+  "schema": [
+    {
+      "column": "ID",
+      "dtype": "int64",
+      "unique_values": 30000,
+      "role": "identifier_dropped_before_modeling"
+    },
+    {
+      "column": "LIMIT_BAL",
+      "dtype": "int64",
+      "unique_values": 81,
+      "role": "numeric_scaled_for_modeling"
+    },
+    {
+      "column": "SEX",
+      "dtype": "int64",
+      "unique_values": 2,
+      "role": "categorical_code_one_hot_encoded_for_classification"
+    },
+    {
+      "column": "EDUCATION",
+      "dtype": "int64",
+      "unique_values": 7,
+      "role": "categorical_code_one_hot_encoded_for_classification"
+    },
+    {
+      "column": "MARRIAGE",
+      "dtype": "int64",
+      "unique_values": 4,
+      "role": "categorical_code_one_hot_encoded_for_classification"
+    },
+    {
+      "column": "AGE",
+      "dtype": "int64",
+      "unique_values": 56,
+      "role": "numeric_scaled_for_modeling"
+    },
+    {
+      "column": "PAY_1",
+      "dtype": "int64",
+      "unique_values": 11,
+      "role": "repayment_status_treated_as_ordinal_numeric"
+    },
+    {
+      "column": "PAY_2",
+      "dtype": "int64",
+      "unique_values": 11,
+      "role": "repayment_status_treated_as_ordinal_numeric"
+    },
+    {
+      "column": "PAY_3",
+      "dtype": "int64",
+      "unique_values": 11,
+      "role": "repayment_status_treated_as_ordinal_numeric"
+    },
+    {
+      "column": "PAY_4",
+      "dtype": "int64",
+      "unique_values": 11,
+      "role": "repayment_status_treated_as_ordinal_numeric"
+    },
+    {
+      "column": "PAY_5",
+      "dtype": "int64",
+      "unique_values": 10,
+      "role": "repayment_status_treated_as_ordinal_numeric"
+    },
+    {
+      "column": "PAY_6",
+      "dtype": "int64",
+      "unique_values": 10,
+      "role": "repayment_status_treated_as_ordinal_numeric"
+    },
+    {
+      "column": "BILL_AMT1",
+      "dtype": "int64",
+      "unique_values": 22723,
+      "role": "numeric_scaled_for_modeling"
+    },
+    {
+      "column": "BILL_AMT2",
+      "dtype": "int64",
+      "unique_values": 22346,
+      "role": "numeric_scaled_for_modeling"
+    },
+    {
+      "column": "BILL_AMT3",
+      "dtype": "int64",
+      "unique_values": 22026,
+      "role": "numeric_scaled_for_modeling"
+    },
+    {
+      "column": "BILL_AMT4",
+      "dtype": "int64",
+      "unique_values": 21548,
+      "role": "numeric_scaled_for_modeling"
+    },
+    {
+      "column": "BILL_AMT5",
+      "dtype": "int64",
+      "unique_values": 21010,
+      "role": "numeric_scaled_for_modeling"
+    },
+    {
+      "column": "BILL_AMT6",
+      "dtype": "int64",
+      "unique_values": 20604,
+      "role": "numeric_scaled_for_modeling"
+    },
+    {
+      "column": "PAY_AMT1",
+      "dtype": "int64",
+      "unique_values": 7943,
+      "role": "numeric_scaled_for_modeling"
+    },
+    {
+      "column": "PAY_AMT2",
+      "dtype": "int64",
+      "unique_values": 7899,
+      "role": "numeric_scaled_for_modeling"
+    },
+    {
+      "column": "PAY_AMT3",
+      "dtype": "int64",
+      "unique_values": 7518,
+      "role": "numeric_scaled_for_modeling"
+    },
+    {
+      "column": "PAY_AMT4",
+      "dtype": "int64",
+      "unique_values": 6937,
+      "role": "numeric_scaled_for_modeling"
+    },
+    {
+      "column": "PAY_AMT5",
+      "dtype": "int64",
+      "unique_values": 6897,
+      "role": "numeric_scaled_for_modeling"
+    },
+    {
+      "column": "PAY_AMT6",
+      "dtype": "int64",
+      "unique_values": 6939,
+      "role": "numeric_scaled_for_modeling"
+    },
+    {
+      "column": "DEFAULT",
+      "dtype": "int64",
+      "unique_values": 2,
+      "role": "target"
+    }
+  ],
+  "target_distribution": [
+    {
+      "value": 0,
+      "count": 23364,
+      "percent": 77.88
+    },
+    {
+      "value": 1,
+      "count": 6636,
+      "percent": 22.12
+    }
+  ],
+  "missing_values": {
+    "total_missing_values": 0,
+    "columns_with_missing_values": []
+  },
+  "identifier_integrity": {
+    "id_column_present": true,
+    "unique_id_count": 30000,
+    "duplicate_id_count": 0,
+    "min_id": 1,
+    "max_id": 30000,
+    "sequential_1_to_n": true,
+    "modeling_decision": "ID is dropped before modeling because it is an identifier, not a predictive feature."
+  },
+  "duplicates": {
+    "exact_duplicate_rows": 0,
+    "duplicate_rows_excluding_id": 35,
+    "duplicate_feature_rows_excluding_id_and_target": 56,
+    "modeling_decision": "Duplicates are reported for transparency; no duplicate rows are removed by the current project."
+  },
+  "categorical_code_audit": {
+    "SEX": {
+      "present": true,
+      "expected_codes": {
+        "1": "male",
+        "2": "female"
+      },
+      "raw_counts": [
+        {
+          "value": 1,
+          "count": 11888,
+          "percent": 39.6267
+        },
+        {
+          "value": 2,
+          "count": 18112,
+          "percent": 60.3733
+        }
+      ],
+      "unusual_or_undocumented_codes": []
+    },
+    "EDUCATION": {
+      "present": true,
+      "expected_codes": {
+        "1": "graduate school",
+        "2": "university",
+        "3": "high school",
+        "4": "others"
+      },
+      "raw_counts": [
+        {
+          "value": 0,
+          "count": 14,
+          "percent": 0.0467
+        },
+        {
+          "value": 1,
+          "count": 10585,
+          "percent": 35.2833
+        },
+        {
+          "value": 2,
+          "count": 14030,
+          "percent": 46.7667
+        },
+        {
+          "value": 3,
+          "count": 4917,
+          "percent": 16.39
+        },
+        {
+          "value": 4,
+          "count": 123,
+          "percent": 0.41
+        },
+        {
+          "value": 5,
+          "count": 280,
+          "percent": 0.9333
+        },
+        {
+          "value": 6,
+          "count": 51,
+          "percent": 0.17
+        }
+      ],
+      "unusual_or_undocumented_codes": [
+        {
+          "value": 0,
+          "count": 14
+        },
+        {
+          "value": 5,
+          "count": 280
+        },
+        {
+          "value": 6,
+          "count": 51
+        }
+      ]
+    },
+    "MARRIAGE": {
+      "present": true,
+      "expected_codes": {
+        "1": "married",
+        "2": "single",
+        "3": "others"
+      },
+      "raw_counts": [
+        {
+          "value": 0,
+          "count": 54,
+          "percent": 0.18
+        },
+        {
+          "value": 1,
+          "count": 13659,
+          "percent": 45.53
+        },
+        {
+          "value": 2,
+          "count": 15964,
+          "percent": 53.2133
+        },
+        {
+          "value": 3,
+          "count": 323,
+          "percent": 1.0767
+        }
+      ],
+      "unusual_or_undocumented_codes": [
+        {
+          "value": 0,
+          "count": 54
+        }
+      ]
+    }
+  },
+  "repayment_status_codes": {
+    "PAY_1": {
+      "present": true,
+      "raw_counts": [
+        {
+          "value": -2,
+          "count": 2759,
+          "percent": 9.1967
+        },
+        {
+          "value": -1,
+          "count": 5686,
+          "percent": 18.9533
+        },
+        {
+          "value": 0,
+          "count": 14737,
+          "percent": 49.1233
+        },
+        {
+          "value": 1,
+          "count": 3688,
+          "percent": 12.2933
+        },
+        {
+          "value": 2,
+          "count": 2667,
+          "percent": 8.89
+        },
+        {
+          "value": 3,
+          "count": 322,
+          "percent": 1.0733
+        },
+        {
+          "value": 4,
+          "count": 76,
+          "percent": 0.2533
+        },
+        {
+          "value": 5,
+          "count": 26,
+          "percent": 0.0867
+        },
+        {
+          "value": 6,
+          "count": 11,
+          "percent": 0.0367
+        },
+        {
+          "value": 7,
+          "count": 9,
+          "percent": 0.03
+        },
+        {
+          "value": 8,
+          "count": 19,
+          "percent": 0.0633
+        }
+      ],
+      "codes_outside_expected_observed_range": [],
+      "modeling_decision": "Repayment status is treated as ordinal numeric and scaled in the classification pipeline."
+    },
+    "PAY_2": {
+      "present": true,
+      "raw_counts": [
+        {
+          "value": -2,
+          "count": 3782,
+          "percent": 12.6067
+        },
+        {
+          "value": -1,
+          "count": 6050,
+          "percent": 20.1667
+        },
+        {
+          "value": 0,
+          "count": 15730,
+          "percent": 52.4333
+        },
+        {
+          "value": 1,
+          "count": 28,
+          "percent": 0.0933
+        },
+        {
+          "value": 2,
+          "count": 3927,
+          "percent": 13.09
+        },
+        {
+          "value": 3,
+          "count": 326,
+          "percent": 1.0867
+        },
+        {
+          "value": 4,
+          "count": 99,
+          "percent": 0.33
+        },
+        {
+          "value": 5,
+          "count": 25,
+          "percent": 0.0833
+        },
+        {
+          "value": 6,
+          "count": 12,
+          "percent": 0.04
+        },
+        {
+          "value": 7,
+          "count": 20,
+          "percent": 0.0667
+        },
+        {
+          "value": 8,
+          "count": 1,
+          "percent": 0.0033
+        }
+      ],
+      "codes_outside_expected_observed_range": [],
+      "modeling_decision": "Repayment status is treated as ordinal numeric and scaled in the classification pipeline."
+    },
+    "PAY_3": {
+      "present": true,
+      "raw_counts": [
+        {
+          "value": -2,
+          "count": 4085,
+          "percent": 13.6167
+        },
+        {
+          "value": -1,
+          "count": 5938,
+          "percent": 19.7933
+        },
+        {
+          "value": 0,
+          "count": 15764,
+          "percent": 52.5467
+        },
+        {
+          "value": 1,
+          "count": 4,
+          "percent": 0.0133
+        },
+        {
+          "value": 2,
+          "count": 3819,
+          "percent": 12.73
+        },
+        {
+          "value": 3,
+          "count": 240,
+          "percent": 0.8
+        },
+        {
+          "value": 4,
+          "count": 76,
+          "percent": 0.2533
+        },
+        {
+          "value": 5,
+          "count": 21,
+          "percent": 0.07
+        },
+        {
+          "value": 6,
+          "count": 23,
+          "percent": 0.0767
+        },
+        {
+          "value": 7,
+          "count": 27,
+          "percent": 0.09
+        },
+        {
+          "value": 8,
+          "count": 3,
+          "percent": 0.01
+        }
+      ],
+      "codes_outside_expected_observed_range": [],
+      "modeling_decision": "Repayment status is treated as ordinal numeric and scaled in the classification pipeline."
+    },
+    "PAY_4": {
+      "present": true,
+      "raw_counts": [
+        {
+          "value": -2,
+          "count": 4348,
+          "percent": 14.4933
+        },
+        {
+          "value": -1,
+          "count": 5687,
+          "percent": 18.9567
+        },
+        {
+          "value": 0,
+          "count": 16455,
+          "percent": 54.85
+        },
+        {
+          "value": 1,
+          "count": 2,
+          "percent": 0.0067
+        },
+        {
+          "value": 2,
+          "count": 3159,
+          "percent": 10.53
+        },
+        {
+          "value": 3,
+          "count": 180,
+          "percent": 0.6
+        },
+        {
+          "value": 4,
+          "count": 69,
+          "percent": 0.23
+        },
+        {
+          "value": 5,
+          "count": 35,
+          "percent": 0.1167
+        },
+        {
+          "value": 6,
+          "count": 5,
+          "percent": 0.0167
+        },
+        {
+          "value": 7,
+          "count": 58,
+          "percent": 0.1933
+        },
+        {
+          "value": 8,
+          "count": 2,
+          "percent": 0.0067
+        }
+      ],
+      "codes_outside_expected_observed_range": [],
+      "modeling_decision": "Repayment status is treated as ordinal numeric and scaled in the classification pipeline."
+    },
+    "PAY_5": {
+      "present": true,
+      "raw_counts": [
+        {
+          "value": -2,
+          "count": 4546,
+          "percent": 15.1533
+        },
+        {
+          "value": -1,
+          "count": 5539,
+          "percent": 18.4633
+        },
+        {
+          "value": 0,
+          "count": 16947,
+          "percent": 56.49
+        },
+        {
+          "value": 2,
+          "count": 2626,
+          "percent": 8.7533
+        },
+        {
+          "value": 3,
+          "count": 178,
+          "percent": 0.5933
+        },
+        {
+          "value": 4,
+          "count": 84,
+          "percent": 0.28
+        },
+        {
+          "value": 5,
+          "count": 17,
+          "percent": 0.0567
+        },
+        {
+          "value": 6,
+          "count": 4,
+          "percent": 0.0133
+        },
+        {
+          "value": 7,
+          "count": 58,
+          "percent": 0.1933
+        },
+        {
+          "value": 8,
+          "count": 1,
+          "percent": 0.0033
+        }
+      ],
+      "codes_outside_expected_observed_range": [],
+      "modeling_decision": "Repayment status is treated as ordinal numeric and scaled in the classification pipeline."
+    },
+    "PAY_6": {
+      "present": true,
+      "raw_counts": [
+        {
+          "value": -2,
+          "count": 4895,
+          "percent": 16.3167
+        },
+        {
+          "value": -1,
+          "count": 5740,
+          "percent": 19.1333
+        },
+        {
+          "value": 0,
+          "count": 16286,
+          "percent": 54.2867
+        },
+        {
+          "value": 2,
+          "count": 2766,
+          "percent": 9.22
+        },
+        {
+          "value": 3,
+          "count": 184,
+          "percent": 0.6133
+        },
+        {
+          "value": 4,
+          "count": 49,
+          "percent": 0.1633
+        },
+        {
+          "value": 5,
+          "count": 13,
+          "percent": 0.0433
+        },
+        {
+          "value": 6,
+          "count": 19,
+          "percent": 0.0633
+        },
+        {
+          "value": 7,
+          "count": 46,
+          "percent": 0.1533
+        },
+        {
+          "value": 8,
+          "count": 2,
+          "percent": 0.0067
+        }
+      ],
+      "codes_outside_expected_observed_range": [],
+      "modeling_decision": "Repayment status is treated as ordinal numeric and scaled in the classification pipeline."
+    }
+  },
+  "recoding_summary": [
+    {
+      "column": "EDUCATION",
+      "mapping": {
+        "0": 4,
+        "5": 4,
+        "6": 4
+      },
+      "rows_changed": 345,
+      "raw_counts": [
+        {
+          "value": 0,
+          "count": 14,
+          "percent": 0.0467
+        },
+        {
+          "value": 1,
+          "count": 10585,
+          "percent": 35.2833
+        },
+        {
+          "value": 2,
+          "count": 14030,
+          "percent": 46.7667
+        },
+        {
+          "value": 3,
+          "count": 4917,
+          "percent": 16.39
+        },
+        {
+          "value": 4,
+          "count": 123,
+          "percent": 0.41
+        },
+        {
+          "value": 5,
+          "count": 280,
+          "percent": 0.9333
+        },
+        {
+          "value": 6,
+          "count": 51,
+          "percent": 0.17
+        }
+      ],
+      "recoded_counts": [
+        {
+          "value": 1,
+          "count": 10585,
+          "percent": 35.2833
+        },
+        {
+          "value": 2,
+          "count": 14030,
+          "percent": 46.7667
+        },
+        {
+          "value": 3,
+          "count": 4917,
+          "percent": 16.39
+        },
+        {
+          "value": 4,
+          "count": 468,
+          "percent": 1.56
+        }
+      ],
+      "modeling_decision": "Values are grouped into the documented 'others' category before modeling."
+    },
+    {
+      "column": "MARRIAGE",
+      "mapping": {
+        "0": 3
+      },
+      "rows_changed": 54,
+      "raw_counts": [
+        {
+          "value": 0,
+          "count": 54,
+          "percent": 0.18
+        },
+        {
+          "value": 1,
+          "count": 13659,
+          "percent": 45.53
+        },
+        {
+          "value": 2,
+          "count": 15964,
+          "percent": 53.2133
+        },
+        {
+          "value": 3,
+          "count": 323,
+          "percent": 1.0767
+        }
+      ],
+      "recoded_counts": [
+        {
+          "value": 1,
+          "count": 13659,
+          "percent": 45.53
+        },
+        {
+          "value": 2,
+          "count": 15964,
+          "percent": 53.2133
+        },
+        {
+          "value": 3,
+          "count": 377,
+          "percent": 1.2567
+        }
+      ],
+      "modeling_decision": "Values are grouped into the documented 'others' category before modeling."
+    }
+  ],
+  "schema_naming": {
+    "csv_repayment_first_column": "PAY_1",
+    "csv_contains_pay_0": false,
+    "decision": "The converted CSV uses PAY_1 for the most recent repayment-status column; the UCI Excel header uses PAY_0.",
+    "source_excel_comparison": {
+      "available": true,
+      "xls_shape": [
+        30000,
+        25
+      ],
+      "csv_shape": [
+        30000,
+        25
+      ],
+      "rename_map_checked": {
+        "PAY_0": "PAY_1",
+        "default payment next month": "DEFAULT"
+      },
+      "columns_match_after_rename": true,
+      "cell_differences_after_rename": 0
+    }
+  },
+  "numeric_ranges": [
+    {
+      "column": "LIMIT_BAL",
+      "min": 10000,
+      "max": 1000000
+    },
+    {
+      "column": "AGE",
+      "min": 21,
+      "max": 79
+    },
+    {
+      "column": "BILL_AMT1",
+      "min": -165580,
+      "max": 964511
+    },
+    {
+      "column": "BILL_AMT2",
+      "min": -69777,
+      "max": 983931
+    },
+    {
+      "column": "BILL_AMT3",
+      "min": -157264,
+      "max": 1664089
+    },
+    {
+      "column": "BILL_AMT4",
+      "min": -170000,
+      "max": 891586
+    },
+    {
+      "column": "BILL_AMT5",
+      "min": -81334,
+      "max": 927171
+    },
+    {
+      "column": "BILL_AMT6",
+      "min": -339603,
+      "max": 961664
+    },
+    {
+      "column": "PAY_AMT1",
+      "min": 0,
+      "max": 873552
+    },
+    {
+      "column": "PAY_AMT2",
+      "min": 0,
+      "max": 1684259
+    },
+    {
+      "column": "PAY_AMT3",
+      "min": 0,
+      "max": 896040
+    },
+    {
+      "column": "PAY_AMT4",
+      "min": 0,
+      "max": 621000
+    },
+    {
+      "column": "PAY_AMT5",
+      "min": 0,
+      "max": 426529
+    },
+    {
+      "column": "PAY_AMT6",
+      "min": 0,
+      "max": 528666
+    },
+    {
+      "column": "PAY_1",
+      "min": -2,
+      "max": 8
+    },
+    {
+      "column": "PAY_2",
+      "min": -2,
+      "max": 8
+    },
+    {
+      "column": "PAY_3",
+      "min": -2,
+      "max": 8
+    },
+    {
+      "column": "PAY_4",
+      "min": -2,
+      "max": 8
+    },
+    {
+      "column": "PAY_5",
+      "min": -2,
+      "max": 8
+    },
+    {
+      "column": "PAY_6",
+      "min": -2,
+      "max": 8
+    }
+  ],
+  "model_ready_traceability": [
+    "Raw CSV is loaded first.",
+    "EDUCATION values 0, 5, and 6 are recoded to 4 (others).",
+    "MARRIAGE value 0 is recoded to 3 (others).",
+    "ID is dropped before modeling.",
+    "SEX, EDUCATION, and MARRIAGE are one-hot encoded for classification.",
+    "PAY_1 through PAY_6 are treated as ordinal numeric repayment-status features."
+  ]
+}

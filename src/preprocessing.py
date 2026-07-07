@@ -18,6 +18,13 @@ from sklearn.pipeline import Pipeline
 TARGET = "DEFAULT"          # nhan: 1 = vo no thang toi, 0 = khong
 DROP_COLS = ["ID"]          # ID chi la so thu tu, khong mang thong tin
 
+# Cac gia tri categorical khong ro trong raw data duoc gom vao nhom "others".
+# Khai bao rieng de data audit va preprocessing cung noi mot su that.
+CATEGORY_RECODES = {
+    "EDUCATION": {0: 4, 5: 4, 6: 4},
+    "MARRIAGE": {0: 3},
+}
+
 # Numerical thuc su (lien tuc): so tien, tuoi
 NUMERIC_COLS = [
     "LIMIT_BAL", "AGE",
@@ -44,8 +51,8 @@ def load_data(csv_path: str) -> pd.DataFrame:
     df = pd.read_csv(csv_path)
 
     # Gom cac gia tri la ve nhom 'others' de tranh categorical rac
-    df["EDUCATION"] = df["EDUCATION"].replace({0: 4, 5: 4, 6: 4})
-    df["MARRIAGE"] = df["MARRIAGE"].replace({0: 3})
+    for col, mapping in CATEGORY_RECODES.items():
+        df[col] = df[col].replace(mapping)
 
     return df
 
