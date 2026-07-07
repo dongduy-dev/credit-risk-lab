@@ -10,11 +10,80 @@
     },
     "final_test_note": "Final test set is reserved for unbiased evaluation and is not used for model selection."
   },
+  "majority_baseline": {
+    "accuracy": 0.7788,
+    "per_class": {
+      "class_0_no_default": {
+        "precision": 0.7788,
+        "recall": 1.0,
+        "f1": 0.8757
+      },
+      "class_1_default": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      }
+    },
+    "weighted_avg": {
+      "precision": 0.6066,
+      "recall": 0.7788,
+      "f1": 0.682
+    },
+    "macro_avg": {
+      "precision": 0.3894,
+      "recall": 0.5,
+      "f1": 0.4378
+    },
+    "confusion_matrix": {
+      "labels": [
+        "0_no_default",
+        "1_default"
+      ],
+      "matrix": [
+        [
+          4673,
+          0
+        ],
+        [
+          1327,
+          0
+        ]
+      ],
+      "true_negatives": 4673,
+      "false_positives": 0,
+      "false_negatives": 1327,
+      "true_positives": 0
+    },
+    "credit_risk": {
+      "missed_defaulters_false_negatives": 1327,
+      "caught_defaulters_true_positives": 0,
+      "false_alarm_non_defaulters_false_positives": 0,
+      "actual_defaulters": 1327,
+      "actual_non_defaulters": 4673,
+      "default_recall": 0.0,
+      "default_precision": 0.0,
+      "default_f1": 0.0,
+      "false_negative_rate": 1.0,
+      "false_positive_rate": 0.0
+    },
+    "strategy": "Predict every customer as no default (class 0).",
+    "purpose": "Shows why accuracy alone is misleading on this imbalanced dataset."
+  },
+  "risk_interpretation": {
+    "majority_baseline_warning": "Majority baseline accuracy is 0.7788 but catches 0 actual defaulters, so models must be judged by class-1 recall/F1 and false negatives, not accuracy alone.",
+    "best_by_accuracy": "Gradient Boosting",
+    "best_by_default_recall": "Logistic Regression",
+    "best_by_default_f1": "Gradient Boosting",
+    "fewest_false_positives": "Gradient Boosting",
+    "risk_objective_notes": [
+      "If missing defaulters is most costly, prefer the model with higher class-1 recall even if accuracy falls.",
+      "If unnecessary interventions are most costly, prefer fewer false positives and higher class-1 precision.",
+      "Weighted F1 is useful as a summary but can hide weak minority-class detection."
+    ]
+  },
   "results": {
     "Logistic Regression": {
       "accuracy": 0.6788,
-      "train_time_sec": 0.067,
-      "test_time_sec": 0.0055,
       "per_class": {
         "class_0_no_default": {
           "precision": 0.8685,
@@ -32,14 +101,53 @@
         "recall": 0.6788,
         "f1": 0.703
       },
+      "macro_avg": {
+        "precision": 0.6183,
+        "recall": 0.6616,
+        "f1": 0.6177
+      },
+      "confusion_matrix": {
+        "labels": [
+          "0_no_default",
+          "1_default"
+        ],
+        "matrix": [
+          [
+            3236,
+            1437
+          ],
+          [
+            490,
+            837
+          ]
+        ],
+        "true_negatives": 3236,
+        "false_positives": 1437,
+        "false_negatives": 490,
+        "true_positives": 837
+      },
+      "credit_risk": {
+        "missed_defaulters_false_negatives": 490,
+        "caught_defaulters_true_positives": 837,
+        "false_alarm_non_defaulters_false_positives": 1437,
+        "actual_defaulters": 1327,
+        "actual_non_defaulters": 4673,
+        "default_recall": 0.6307,
+        "default_precision": 0.3681,
+        "default_f1": 0.4649,
+        "false_negative_rate": 0.3693,
+        "false_positive_rate": 0.3075
+      },
+      "roc_auc": 0.7104,
+      "pr_auc": 0.4913,
+      "train_time_sec": 0.0597,
+      "test_time_sec": 0.0051,
       "selection": {
         "validation_weighted_f1": 0.7144
       }
     },
     "Random Forest": {
       "accuracy": 0.8152,
-      "train_time_sec": 1.4621,
-      "test_time_sec": 0.1042,
       "per_class": {
         "class_0_no_default": {
           "precision": 0.8366,
@@ -57,14 +165,53 @@
         "recall": 0.8152,
         "f1": 0.7927
       },
+      "macro_avg": {
+        "precision": 0.7455,
+        "recall": 0.648,
+        "f1": 0.6716
+      },
+      "confusion_matrix": {
+        "labels": [
+          "0_no_default",
+          "1_default"
+        ],
+        "matrix": [
+          [
+            4429,
+            244
+          ],
+          [
+            865,
+            462
+          ]
+        ],
+        "true_negatives": 4429,
+        "false_positives": 244,
+        "false_negatives": 865,
+        "true_positives": 462
+      },
+      "credit_risk": {
+        "missed_defaulters_false_negatives": 865,
+        "caught_defaulters_true_positives": 462,
+        "false_alarm_non_defaulters_false_positives": 244,
+        "actual_defaulters": 1327,
+        "actual_non_defaulters": 4673,
+        "default_recall": 0.3482,
+        "default_precision": 0.6544,
+        "default_f1": 0.4545,
+        "false_negative_rate": 0.6518,
+        "false_positive_rate": 0.0522
+      },
+      "roc_auc": 0.7613,
+      "pr_auc": 0.538,
+      "train_time_sec": 1.48,
+      "test_time_sec": 0.0638,
       "selection": {
         "validation_weighted_f1": 0.7921
       }
     },
     "Gradient Boosting": {
       "accuracy": 0.8193,
-      "train_time_sec": 7.0533,
-      "test_time_sec": 0.0122,
       "per_class": {
         "class_0_no_default": {
           "precision": 0.8402,
@@ -82,6 +229,47 @@
         "recall": 0.8193,
         "f1": 0.7983
       },
+      "macro_avg": {
+        "precision": 0.7539,
+        "recall": 0.6566,
+        "f1": 0.6814
+      },
+      "confusion_matrix": {
+        "labels": [
+          "0_no_default",
+          "1_default"
+        ],
+        "matrix": [
+          [
+            4432,
+            241
+          ],
+          [
+            843,
+            484
+          ]
+        ],
+        "true_negatives": 4432,
+        "false_positives": 241,
+        "false_negatives": 843,
+        "true_positives": 484
+      },
+      "credit_risk": {
+        "missed_defaulters_false_negatives": 843,
+        "caught_defaulters_true_positives": 484,
+        "false_alarm_non_defaulters_false_positives": 241,
+        "actual_defaulters": 1327,
+        "actual_non_defaulters": 4673,
+        "default_recall": 0.3647,
+        "default_precision": 0.6676,
+        "default_f1": 0.4717,
+        "false_negative_rate": 0.6353,
+        "false_positive_rate": 0.0516
+      },
+      "roc_auc": 0.778,
+      "pr_auc": 0.5502,
+      "train_time_sec": 6.7754,
+      "test_time_sec": 0.0089,
       "selection": {
         "validation_weighted_f1": 0.7994
       }
