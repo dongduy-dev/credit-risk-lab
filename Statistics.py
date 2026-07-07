@@ -1,6 +1,6 @@
 """
-Statistics.py — Thong ke & kham pha du lieu (EDA) cho dataset Credit Card Default.
-Tai cau truc tu project mau, doi sang data/credit_card_default.csv.
+Statistics.py - Data statistics and EDA for the Credit Card Default dataset.
+Uses data/credit_card_default.csv and the raw-data audit helper.
 """
 from pathlib import Path
 import sys
@@ -22,7 +22,7 @@ def load_quality_audit():
 
 
 def Statistics():
-    st.header("📈 Data Statistics")
+    st.header("Data Statistics")
 
     try:
         raw_df = pd.read_csv(DATA_PATH)
@@ -45,24 +45,24 @@ def Statistics():
     st.divider()
 
     # --- Phan bo target ---
-    st.subheader("🎯 Target Distribution")
+    st.subheader("Target Distribution")
     vc = df["DEFAULT"].value_counts().reset_index()
     vc.columns = ["DEFAULT", "count"]
     vc["label"] = vc["DEFAULT"].map({0: "No default (0)", 1: "Default (1)"})
     fig = px.pie(vc, names="label", values="count", title="Default vs No-default ratio", hole=0.4)
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width="stretch")
     st.caption("Imbalanced dataset: the default group is the minority (~22%).")
 
     st.divider()
 
     # --- Schema ---
-    st.subheader("🧱 Dataset Schema")
+    st.subheader("Dataset Schema")
     schema = pd.DataFrame({
         "column": df.columns,
         "dtype": [str(df[c].dtype) for c in df.columns],
         "unique": df.nunique().values,
     })
-    st.dataframe(schema, use_container_width=True, hide_index=True)
+    st.dataframe(schema, width="stretch", hide_index=True)
 
     st.divider()
 
@@ -81,18 +81,18 @@ def Statistics():
     q1, q2 = st.columns(2)
     with q1:
         st.markdown("**Target distribution**")
-        st.dataframe(pd.DataFrame(audit["target_distribution"]), use_container_width=True, hide_index=True)
+        st.dataframe(pd.DataFrame(audit["target_distribution"]), width="stretch", hide_index=True)
     with q2:
         st.markdown("**Missing values and identifiers**")
         id_info = audit["identifier_integrity"]
         id_rows = [
-            {"check": "missing values", "value": audit["missing_values"]["total_missing_values"]},
-            {"check": "duplicate IDs", "value": id_info.get("duplicate_id_count")},
-            {"check": "ID is sequential 1..n", "value": id_info.get("sequential_1_to_n")},
-            {"check": "rows duplicated after dropping ID", "value": audit["duplicates"]["duplicate_rows_excluding_id"]},
-            {"check": "feature rows duplicated after dropping ID/target", "value": audit["duplicates"]["duplicate_feature_rows_excluding_id_and_target"]},
+            {"check": "missing values", "value": str(audit["missing_values"]["total_missing_values"])},
+            {"check": "duplicate IDs", "value": str(id_info.get("duplicate_id_count"))},
+            {"check": "ID is sequential 1..n", "value": str(id_info.get("sequential_1_to_n"))},
+            {"check": "rows duplicated after dropping ID", "value": str(audit["duplicates"]["duplicate_rows_excluding_id"])},
+            {"check": "feature rows duplicated after dropping ID/target", "value": str(audit["duplicates"]["duplicate_feature_rows_excluding_id_and_target"])},
         ]
-        st.dataframe(pd.DataFrame(id_rows), use_container_width=True, hide_index=True)
+        st.dataframe(pd.DataFrame(id_rows), width="stretch", hide_index=True)
 
     st.markdown("**Unusual categorical codes in raw data**")
     cat_rows = []
@@ -106,7 +106,7 @@ def Statistics():
                 "percent": item["percent"],
                 "documented_code": expected,
             })
-    st.dataframe(pd.DataFrame(cat_rows), use_container_width=True, hide_index=True)
+    st.dataframe(pd.DataFrame(cat_rows), width="stretch", hide_index=True)
 
     st.markdown("**Raw values versus recoded values**")
     recode_rows = []
@@ -117,7 +117,7 @@ def Statistics():
             "rows_changed": item["rows_changed"],
             "decision": item["modeling_decision"],
         })
-    st.dataframe(pd.DataFrame(recode_rows), use_container_width=True, hide_index=True)
+    st.dataframe(pd.DataFrame(recode_rows), width="stretch", hide_index=True)
     selected_recode = st.selectbox(
         "Select recoded categorical column",
         [item["column"] for item in audit["recoding_summary"]],
@@ -129,27 +129,27 @@ def Statistics():
         recode_count_rows.append({"stage": "raw", **item})
     for item in recode_detail["recoded_counts"]:
         recode_count_rows.append({"stage": "model-ready", **item})
-    st.dataframe(pd.DataFrame(recode_count_rows), use_container_width=True, hide_index=True)
+    st.dataframe(pd.DataFrame(recode_count_rows), width="stretch", hide_index=True)
 
     st.markdown("**Repayment-status code counts**")
     pay_columns = list(audit["repayment_status_codes"].keys())
     selected_pay = st.selectbox("Select repayment-status column", pay_columns, key="data_quality_pay_col")
     st.dataframe(pd.DataFrame(audit["repayment_status_codes"][selected_pay]["raw_counts"]),
-                 use_container_width=True, hide_index=True)
+                 width="stretch", hide_index=True)
 
     naming = audit["schema_naming"]
     st.markdown("**Schema naming traceability**")
     st.write(naming["decision"])
     source_compare = naming.get("source_excel_comparison", {})
     if source_compare.get("available"):
-        st.dataframe(pd.DataFrame([source_compare]), use_container_width=True, hide_index=True)
+        st.dataframe(pd.DataFrame([source_compare]), width="stretch", hide_index=True)
     else:
         st.warning(source_compare.get("reason", "Source Excel comparison is unavailable."))
 
     st.divider()
 
     # --- Kham pha cot numeric ---
-    st.subheader("🔍 Numeric Explorer")
+    st.subheader("Numeric Explorer")
     num_cols = [c for c in df.columns if c != "DEFAULT"]
     col = st.selectbox("Select a column", num_cols)
     e1, e2 = st.columns(2)
@@ -157,8 +157,8 @@ def Statistics():
         with st.container(border=True):
             fig = px.histogram(df, x=col, color="DEFAULT", nbins=40,
                             title=f"Distribution of {col} by class")
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width="stretch")
     with e2:
         with st.container(border=True):
             fig = px.box(df, x="DEFAULT", y=col, title=f"Box plot of {col} by class")
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width="stretch")

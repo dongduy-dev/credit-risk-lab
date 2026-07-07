@@ -86,7 +86,7 @@ def Home():
 
     st.divider()
 
-    if st.button("Predict", type="primary", use_container_width=True):
+    if st.button("Predict", type="primary", width="stretch"):
         row = {
             "LIMIT_BAL": limit_bal,
             "SEX": SEX_MAP[sex],

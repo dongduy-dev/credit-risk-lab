@@ -140,7 +140,7 @@
       },
       "roc_auc": 0.7104,
       "pr_auc": 0.4913,
-      "train_time_sec": 0.0597,
+      "train_time_sec": 0.0691,
       "test_time_sec": 0.0051,
       "selection": {
         "validation_weighted_f1": 0.7144
@@ -204,8 +204,8 @@
       },
       "roc_auc": 0.7613,
       "pr_auc": 0.538,
-      "train_time_sec": 1.48,
-      "test_time_sec": 0.0638,
+      "train_time_sec": 1.4319,
+      "test_time_sec": 0.0644,
       "selection": {
         "validation_weighted_f1": 0.7921
       }
@@ -268,8 +268,8 @@
       },
       "roc_auc": 0.778,
       "pr_auc": 0.5502,
-      "train_time_sec": 6.7754,
-      "test_time_sec": 0.0089,
+      "train_time_sec": 6.751,
+      "test_time_sec": 0.012,
       "selection": {
         "validation_weighted_f1": 0.7994
       }

@@ -13,7 +13,7 @@ ROOT = Path(__file__).resolve().parent
 STYLE_PATH = ROOT / "styles.css"
 LOGO_PATH = ROOT / "logo.png"
 
-st.set_page_config(page_title="Credit Card Default Prediction", page_icon="💳", layout="wide")
+st.set_page_config(page_title="Credit Card Default Prediction", page_icon=":credit_card:", layout="wide")
 
 
 # Load style css (neu co)

@@ -50,11 +50,11 @@ def FeatureSelection():
         title="Absolute Pearson correlation with target (training set)",
         labels={"abs_corr": "absolute correlation", "corr_with_target": "signed correlation"},
     )
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width="stretch")
 
     st.markdown("**Top correlated features used to build subsets**")
     top_corr = corr_df.sort_values("abs_corr", ascending=False).head(10)
-    st.dataframe(top_corr[["feature", "corr_with_target", "abs_corr"]], use_container_width=True, hide_index=True)
+    st.dataframe(top_corr[["feature", "corr_with_target", "abs_corr"]], width="stretch", hide_index=True)
 
     st.subheader("Correlation Matrix (training set heatmap)")
     try:
@@ -69,7 +69,7 @@ def FeatureSelection():
             zmax=1,
         )
         fig.update_layout(height=700)
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
     except FileNotFoundError:
         st.warning('No training-set correlation matrix found. Run "python src/feature_selection.py" first.')
     except Exception as e:
@@ -84,7 +84,7 @@ def FeatureSelection():
     })
     if "selected_features" in exp_df.columns:
         show["Selected features"] = exp_df["selected_features"].apply(lambda features: ", ".join(features))
-    st.dataframe(show, use_container_width=True, hide_index=True)
+    st.dataframe(show, width="stretch", hide_index=True)
 
     fig = px.line(
         exp_df,
@@ -94,7 +94,7 @@ def FeatureSelection():
         title="MAE vs Number of Selected Features",
         labels={"num_features": "Number of features", "mae": "MAE"},
     )
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width="stretch")
 
     experiments = data["experiments"]
     best_exp = min(experiments, key=lambda item: item["mae"])

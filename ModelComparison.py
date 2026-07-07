@@ -91,7 +91,7 @@ def ModelComparison():
 
     st.subheader("Assignment Metrics and Credit-risk Summary")
     st.caption("Accuracy and weighted F1 are shown with the required per-class metrics, but default-class recall and missed defaulters are central for this imbalanced credit-risk problem.")
-    st.dataframe(df, use_container_width=True, hide_index=True)
+    st.dataframe(df, width="stretch", hide_index=True)
 
     if baseline:
         b1, b2, b3, b4 = st.columns(4)
@@ -114,7 +114,7 @@ def ModelComparison():
                 barmode="group",
                 title="Overall metrics vs default-class metrics",
             )
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width="stretch")
     with c2:
         with st.container(border=True):
             fig = px.bar(
@@ -124,7 +124,7 @@ def ModelComparison():
                 barmode="group",
                 title="Training vs testing time (seconds)",
             )
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width="stretch")
 
     st.subheader("Per-class Metrics")
     detail_rows = []
@@ -141,7 +141,7 @@ def ModelComparison():
                 "Recall": c["recall"],
                 "F1": c["f1"],
             })
-    st.dataframe(pd.DataFrame(detail_rows), use_container_width=True, hide_index=True)
+    st.dataframe(pd.DataFrame(detail_rows), width="stretch", hide_index=True)
 
     if all("confusion_matrix" in r for r in results.values()):
         st.subheader("False-positive and False-negative Trade-off")
@@ -179,7 +179,7 @@ def ModelComparison():
             }
             risk_rows.insert(0, baseline_row)
         risk_display_df = pd.DataFrame(risk_rows)
-        st.dataframe(risk_display_df, use_container_width=True, hide_index=True)
+        st.dataframe(risk_display_df, width="stretch", hide_index=True)
 
         c3, c4 = st.columns(2)
         with c3:
@@ -190,7 +190,7 @@ def ModelComparison():
                 barmode="group",
                 title="Missed defaulters vs false alarms",
             )
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width="stretch")
         with c4:
             fig = px.bar(
                 risk_display_df,
@@ -199,7 +199,7 @@ def ModelComparison():
                 barmode="group",
                 title="Default recall vs precision",
             )
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width="stretch")
 
     notes = interpretation.get("risk_objective_notes", [])
     if notes:
