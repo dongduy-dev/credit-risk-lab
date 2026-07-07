@@ -1,6 +1,6 @@
 {
   "dataset": {
-    "csv_path": "C:\\Users\\huynh\\OneDrive\\Desktop\\MachineLearning\\credit-risk-lab\\data\\credit_card_default.csv",
+    "csv_path": "data/credit_card_default.csv",
     "shape": [
       30000,
       25

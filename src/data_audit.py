@@ -233,10 +233,14 @@ def build_audit(csv_path: str | Path = DATA_PATH, xls_path: str | Path | None = 
     xls_path = Path(xls_path) if xls_path is not None else None
     df = pd.read_csv(csv_path)
     feature_cols = [c for c in df.columns if c not in DROP_COLS + [TARGET]]
+    try:
+        csv_path_for_artifact = csv_path.resolve().relative_to(ROOT).as_posix()
+    except ValueError:
+        csv_path_for_artifact = csv_path.name
 
     return {
         "dataset": {
-            "csv_path": str(csv_path),
+            "csv_path": csv_path_for_artifact,
             "shape": [int(df.shape[0]), int(df.shape[1])],
             "feature_count_excluding_id_and_target": len(feature_cols),
             "target_column": TARGET,
