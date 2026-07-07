@@ -23,12 +23,17 @@ def ModelComparison():
         st.stop()
 
     results = data["results"]
-    st.success(f"Best model (by weighted F1): **{data['best_model']}**")
+    selection = data.get("selection", {})
+    if selection.get("selection_set") == "validation":
+        st.success(f"Best model (selected by validation weighted F1): **{data['best_model']}**")
+        st.caption("Final test metrics below are reported after model selection and are not used to choose the saved model.")
+    else:
+        st.success(f"Best model (by weighted F1): **{data['best_model']}**")
 
     # --- Bang tong hop ---
     rows = []
     for name, r in results.items():
-        rows.append({
+        row = {
             "Model": name,
             "Accuracy": r["accuracy"],
             "Weighted F1": r["weighted_avg"]["f1"],
@@ -36,7 +41,10 @@ def ModelComparison():
             "Recall (avg)": r["weighted_avg"]["recall"],
             "Train (s)": r["train_time_sec"],
             "Test (s)": r["test_time_sec"],
-        })
+        }
+        if "selection" in r:
+            row["Validation Weighted F1"] = r["selection"].get("validation_weighted_f1")
+        rows.append(row)
     df = pd.DataFrame(rows)
     st.subheader("📋 Summary Table")
     st.dataframe(df, use_container_width=True, hide_index=True)
