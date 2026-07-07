@@ -1,0 +1,27 @@
+# Local task instructions
+AGENTS.md
+
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*$py.class
+
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Local environments
+.venv/
+venv/
+env/
+
+# Local configuration and logs
+.env
+.env.*
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
