@@ -1,0 +1,204 @@
+{
+  "correlation_ranking": [
+    {
+      "feature": "PAY_1",
+      "corr_with_target": 0.3247937284786234,
+      "abs_corr": 0.3247937284786234
+    },
+    {
+      "feature": "PAY_2",
+      "corr_with_target": 0.2635512016721663,
+      "abs_corr": 0.2635512016721663
+    },
+    {
+      "feature": "PAY_3",
+      "corr_with_target": 0.23525251372491737,
+      "abs_corr": 0.23525251372491737
+    },
+    {
+      "feature": "PAY_4",
+      "corr_with_target": 0.21661363684242554,
+      "abs_corr": 0.21661363684242554
+    },
+    {
+      "feature": "PAY_5",
+      "corr_with_target": 0.2041489138761675,
+      "abs_corr": 0.2041489138761675
+    },
+    {
+      "feature": "PAY_6",
+      "corr_with_target": 0.18686636165354595,
+      "abs_corr": 0.18686636165354595
+    },
+    {
+      "feature": "LIMIT_BAL",
+      "corr_with_target": -0.1535198763935082,
+      "abs_corr": 0.1535198763935082
+    },
+    {
+      "feature": "PAY_AMT1",
+      "corr_with_target": -0.07292948777785176,
+      "abs_corr": 0.07292948777785176
+    },
+    {
+      "feature": "PAY_AMT2",
+      "corr_with_target": -0.05857870658290122,
+      "abs_corr": 0.05857870658290122
+    },
+    {
+      "feature": "PAY_AMT4",
+      "corr_with_target": -0.056827400892887965,
+      "abs_corr": 0.056827400892887965
+    },
+    {
+      "feature": "PAY_AMT3",
+      "corr_with_target": -0.056250350990331426,
+      "abs_corr": 0.056250350990331426
+    },
+    {
+      "feature": "PAY_AMT5",
+      "corr_with_target": -0.055123515621088734,
+      "abs_corr": 0.055123515621088734
+    },
+    {
+      "feature": "PAY_AMT6",
+      "corr_with_target": -0.053183340326128384,
+      "abs_corr": 0.053183340326128384
+    },
+    {
+      "feature": "SEX",
+      "corr_with_target": -0.039960577705440564,
+      "abs_corr": 0.039960577705440564
+    },
+    {
+      "feature": "EDUCATION",
+      "corr_with_target": 0.03384222982567632,
+      "abs_corr": 0.03384222982567632
+    },
+    {
+      "feature": "MARRIAGE",
+      "corr_with_target": -0.027574706154477678,
+      "abs_corr": 0.027574706154477678
+    },
+    {
+      "feature": "BILL_AMT1",
+      "corr_with_target": -0.01964419714322167,
+      "abs_corr": 0.01964419714322167
+    },
+    {
+      "feature": "BILL_AMT2",
+      "corr_with_target": -0.014193218088215815,
+      "abs_corr": 0.014193218088215815
+    },
+    {
+      "feature": "BILL_AMT3",
+      "corr_with_target": -0.014075518043214868,
+      "abs_corr": 0.014075518043214868
+    },
+    {
+      "feature": "AGE",
+      "corr_with_target": 0.013889834301963095,
+      "abs_corr": 0.013889834301963095
+    },
+    {
+      "feature": "BILL_AMT4",
+      "corr_with_target": -0.01015649588028977,
+      "abs_corr": 0.01015649588028977
+    },
+    {
+      "feature": "BILL_AMT5",
+      "corr_with_target": -0.00676046384101478,
+      "abs_corr": 0.00676046384101478
+    },
+    {
+      "feature": "BILL_AMT6",
+      "corr_with_target": -0.0053723149148155675,
+      "abs_corr": 0.0053723149148155675
+    }
+  ],
+  "experiments": [
+    {
+      "feature_set": "top_5",
+      "num_features": 5,
+      "mae": 0.31201,
+      "selected_features": [
+        "PAY_1",
+        "PAY_2",
+        "PAY_3",
+        "PAY_4",
+        "PAY_5"
+      ]
+    },
+    {
+      "feature_set": "top_10",
+      "num_features": 10,
+      "mae": 0.31025,
+      "selected_features": [
+        "LIMIT_BAL",
+        "PAY_1",
+        "PAY_2",
+        "PAY_3",
+        "PAY_4",
+        "PAY_5",
+        "PAY_6",
+        "PAY_AMT1",
+        "PAY_AMT2",
+        "PAY_AMT6"
+      ]
+    },
+    {
+      "feature_set": "top_15",
+      "num_features": 15,
+      "mae": 0.31001,
+      "selected_features": [
+        "LIMIT_BAL",
+        "SEX",
+        "EDUCATION",
+        "PAY_1",
+        "PAY_2",
+        "PAY_3",
+        "PAY_4",
+        "PAY_5",
+        "PAY_6",
+        "PAY_AMT1",
+        "PAY_AMT2",
+        "PAY_AMT3",
+        "PAY_AMT4",
+        "PAY_AMT5",
+        "PAY_AMT6"
+      ]
+    },
+    {
+      "feature_set": "all",
+      "num_features": 23,
+      "mae": 0.30661,
+      "selected_features": [
+        "LIMIT_BAL",
+        "SEX",
+        "EDUCATION",
+        "MARRIAGE",
+        "AGE",
+        "PAY_1",
+        "PAY_2",
+        "PAY_3",
+        "PAY_4",
+        "PAY_5",
+        "PAY_6",
+        "BILL_AMT1",
+        "BILL_AMT2",
+        "BILL_AMT3",
+        "BILL_AMT4",
+        "BILL_AMT5",
+        "BILL_AMT6",
+        "PAY_AMT1",
+        "PAY_AMT2",
+        "PAY_AMT3",
+        "PAY_AMT4",
+        "PAY_AMT5",
+        "PAY_AMT6"
+      ]
+    }
+  ],
+  "best_feature_set": "all",
+  "note": "Target nhi phan 0/1; LinearRegression + MAE dung de minh hoa anh huong cua feature selection, khong phai model phan loai chinh."
+}

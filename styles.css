@@ -1,0 +1,93 @@
+[data-testid=metric-container] {
+    box-shadow: 0 0 4px #686664;
+    padding: 10px;
+}
+
+.plot-container>div {
+    box-shadow: 0 0 2px #070505;
+    padding: 5px;
+    border-color: #000000;
+    
+   
+}
+
+div[data-testid="stExpander"] div[role="button"] p
+{
+    font-size: 1.2rem;
+    color:rgb(0, 0, 0);
+    border-color: #000000;
+    color-scheme: #000000;
+}
+
+.sidebar-content {
+    color: white;
+}
+
+[data-testid=stSidebar] {
+    color: white;
+     
+}
+
+/* Custom Styles for Status Change UI */
+.status-change-item {
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    line-height: 1.5;
+}
+
+.status-change-item:hover {
+    background-color: #eef2ff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+}
+
+        /* Style the data editor table */
+        .stDataEditor div[data-testid="stDataFrame"] {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        /* Customize table header */
+        .stDataEditor thead th {
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+            text-align: center;
+            padding: 10px;
+        }
+
+        /* Customize table cells */
+        .stDataEditor tbody td {
+            font-size: 14px;
+            color: #333;
+            text-align: center;
+            padding: 10px;
+        }
+
+        /* Add hover effect to rows */
+        .stDataEditor tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* Add zebra-striping to rows */
+        .stDataEditor tbody tr:nth-child(odd) {
+            background-color: #f9f9f9;
+        }
+
+        /* Add smooth transitions */
+        .stDataEditor tbody tr {
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        /* Style for active cell */
+        .stDataEditor tbody td:focus {
+            background-color: #ffd700;
+            border: 1px solid #333;
+        }
