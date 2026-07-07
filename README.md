@@ -1,8 +1,6 @@
-# Credit Risk Lab - Credit Card Default Prediction
+# Credit Card Default Prediction
 
 University machine-learning midterm project for the UCI **Default of Credit Card Clients** dataset (Dataset ID 350). The goal is to predict whether a credit-card client will default on the next payment.
-
-The project is submission-ready as a reproducible classification experiment, a correlation-based feature-selection experiment, a raw-data quality audit, and a Streamlit demo.
 
 ## Project Contents
 
@@ -197,17 +195,3 @@ The `-B` flag prevents Python bytecode cache files from being generated during r
 - Correlation feature selection is univariate and linear; it does not capture interactions or nonlinear effects.
 - Pearson correlation on categorical codes is reported only as a descriptive assignment method, not as a causal or ordinal interpretation.
 - Hyperparameter tuning is intentionally limited; the assignment focuses on correct comparison and interpretation rather than leaderboard performance.
-
-## Presentation Checklist
-
-Suggested slide flow:
-
-1. Dataset and problem statement.
-2. Raw dataset facts and data-quality findings.
-3. Preprocessing decisions and leakage-safe experiment design.
-4. Classification model comparison and majority baseline.
-5. Credit-risk interpretation: default recall, missed defaulters, false positives.
-6. Correlation feature-selection method and visualizations.
-7. Linear Regression + MAE feature-subset comparison.
-8. Streamlit demo walkthrough.
-9. Limitations and honest conclusion.
